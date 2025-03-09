@@ -6,13 +6,9 @@ import { BASE_PATH, IS_GITHUB_PAGES } from "@/lib/constants";
 export function Layout({ children }: { children: React.ReactNode }) {
   const [_, navigate] = useLocation();
   
-  // Handle navigation with GitHub Pages base path
+  // Simple navigation - wouter's Router base prop will handle the base path
   const handleNavigate = (path: string) => {
-    if (IS_GITHUB_PAGES) {
-      navigate(`${BASE_PATH}${path}`);
-    } else {
-      navigate(path);
-    }
+    navigate(path);
   };
 
   return (

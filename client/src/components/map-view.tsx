@@ -104,12 +104,8 @@ export function MapView({ skateparks }: MapViewProps) {
         marker.setPopup(popup);
 
         popupContent.querySelector('.book-lesson-btn')?.addEventListener('click', () => {
-          // Add base path for GitHub Pages if needed
-          if (IS_GITHUB_PAGES) {
-            setLocation(`${BASE_PATH}/booking/${park.id}`);
-          } else {
-            setLocation(`/booking/${park.id}`);
-          }
+          // No need to add base path, wouter's Router base prop will handle it
+          setLocation(`/booking/${park.id}`);
         });
       });
     } catch (error) {
