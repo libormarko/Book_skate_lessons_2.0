@@ -1,23 +1,38 @@
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { MobileNav } from "./mobile-nav";
-import { BASE_PATH } from "@/lib/constants";
+import { BASE_PATH, IS_GITHUB_PAGES } from "@/lib/constants";
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const [_, navigate] = useLocation();
+  
+  // Handle navigation with GitHub Pages base path
+  const handleNavigate = (path: string) => {
+    if (IS_GITHUB_PAGES) {
+      navigate(`${BASE_PATH}${path}`);
+    } else {
+      navigate(path);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#F7F7F7]">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between">
-          <Link href="/">
-            <Button variant="link" className="text-2xl font-bold text-[#FF5A5F]">
-              SkateSpot
-            </Button>
-          </Link>
+          <button 
+            onClick={() => handleNavigate('/')}
+            className="text-2xl font-bold text-[#FF5A5F] bg-transparent border-none px-4 py-2 cursor-pointer"
+          >
+            SkateSpot
+          </button>
 
           <nav className="hidden md:flex items-center gap-6">
-            <Link href="/search">
-              <Button variant="ghost">Find Lessons</Button>
-            </Link>
+            <button 
+              onClick={() => handleNavigate('/search')}
+              className="rounded-md bg-transparent hover:bg-accent hover:text-accent-foreground px-4 py-2 text-sm font-medium"
+            >
+              Find Lessons
+            </button>
           </nav>
 
           <MobileNav className="md:hidden" />

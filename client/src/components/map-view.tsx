@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import tt from "@tomtom-international/web-sdk-maps";
 import "@tomtom-international/web-sdk-maps/dist/maps.css";
 import { useLocation } from "wouter";
+import { BASE_PATH, IS_GITHUB_PAGES } from "@/lib/constants";
+import { getEnvVar, isMapEnabled } from "@/lib/envManager";
 
 interface MapViewProps {
   skateparks: Skatepark[];
@@ -17,9 +19,16 @@ export function MapView({ skateparks }: MapViewProps) {
   useEffect(() => {
     if (!mapElement.current) return;
 
+    // Check if map should be enabled
+    if (!isMapEnabled() && IS_GITHUB_PAGES) {
+      setMapError("Map is disabled in the demo version. API key required for full functionality.");
+      return;
+    }
+
     try {
-      const apiKey = import.meta.env.VITE_TOMTOM_API_KEY;
+      const apiKey = getEnvVar('VITE_TOMTOM_API_KEY');
       if (!apiKey) {
+        setMapError("TomTom API key is missing");
         console.error("TomTom API key is missing");
         return;
       }
@@ -95,14 +104,39 @@ export function MapView({ skateparks }: MapViewProps) {
         marker.setPopup(popup);
 
         popupContent.querySelector('.book-lesson-btn')?.addEventListener('click', () => {
-          // Add base path for GitHub Pages
-          setLocation(`/booking/${park.id}`);
+          // Add base path for GitHub Pages if needed
+          if (IS_GITHUB_PAGES) {
+            setLocation(`${BASE_PATH}/booking/${park.id}`);
+          } else {
+            setLocation(`/booking/${park.id}`);
+          }
         });
       });
     } catch (error) {
       console.error("Error adding markers:", error);
     }
   }, [skateparks, setLocation]);
+
+  // Display error message if map can't be loaded
+  if (mapError) {
+    return (
+      <div 
+        style={{ width: "100%", height: "100%" }}
+        className="rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center"
+      >
+        <div className="text-center p-8">
+          <h3 className="text-lg font-semibold mb-2">Map Unavailable</h3>
+          <p className="text-gray-600">{mapError}</p>
+          {IS_GITHUB_PAGES && (
+            <p className="mt-4 text-sm">
+              Note: The map functionality is limited in the demo version.
+              <br />To see the full map features, clone the repository and add your TomTom API key.
+            </p>
+          )}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div 
