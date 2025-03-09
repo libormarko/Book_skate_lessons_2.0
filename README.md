@@ -8,25 +8,22 @@ A modern frontend skateboarding lesson booking platform for German skateparks, f
 
 - 🛹 Browse skateparks across Germany
 - 🗺️ Interactive map view with TomTom Maps integration
-- 📅 Book skateboarding lessons
+- 📅 Book skateboarding lessons (demo only)
 - 📱 Responsive design for mobile and desktop
-- 📧 Email notifications for booking confirmations
 
 ## Prerequisites
 
 Before you begin, ensure you have the following:
 - Node.js (v18 or higher)
 - npm (comes with Node.js)
-- Required API keys:
-  - TomTom Maps API key
-  - Gmail account credentials (for sending booking confirmations)
+- TomTom Maps API key (for the map to work)
 
 ## Installation
 
-1. Unzip the project:
+1. Clone the repository:
 ```bash
-unzip skatespot.zip
-cd skatespot
+git clone https://github.com/libormarko/Book_skate_lessons_2.0.git
+cd Book_skate_lessons_2.0
 ```
 
 2. Install dependencies:
@@ -34,11 +31,9 @@ cd skatespot
 npm install
 ```
 
-3. Create a `.env` file in the root directory with the following variables:
+3. Create a `.env` file in the root directory and also in the `client` directory with the following variable:
 ```
 VITE_TOMTOM_API_KEY=your_tomtom_api_key
-GMAIL_USER=your_gmail_address
-GMAIL_APP_PASSWORD=your_gmail_app_password
 ```
 
 ## Development
@@ -49,7 +44,7 @@ To start the development server:
 npm run dev
 ```
 
-The application will be available at `http://localhost:5000`.
+The application will be available at `http://localhost:5173/`.
 
 ## Building for Production
 
@@ -59,10 +54,12 @@ To create a production build:
 npm run build
 ```
 
-To start the production server:
+## Deployment to GitHub Pages
+
+To deploy to GitHub Pages:
 
 ```bash
-npm start
+npm run deploy
 ```
 
 ## Project Structure
@@ -72,10 +69,6 @@ npm start
   - `/src/pages` - Page components
   - `/src/lib` - Utility functions and configurations
   - `/src/mocks` - Mock data and API implementations
-- `/server` - Backend Express server
-  - `/routes.ts` - API route definitions
-  - `/storage.ts` - Data storage implementation
-  - `/email.ts` - Email service implementation
 - `/shared` - Shared types and schemas
 
 ## Technologies Used
@@ -84,17 +77,14 @@ npm start
 - TanStack Query for data fetching
 - TomTom Maps SDK
 - Tailwind CSS + shadcn/ui
-- Express.js backend
-- Node.js email service
+- Wouter for routing
+- Vite for build tooling
 
 ## Environment Variables
 
 - `VITE_TOMTOM_API_KEY`: Your TomTom Maps API key (get it from [TomTom Developer Portal](https://developer.tomtom.com/))
-- `GMAIL_USER`: Gmail address used for sending booking confirmations
-- `GMAIL_APP_PASSWORD`: Gmail app password (Generate from Google Account settings)
 
 ## Development Guidelines
 
 - Run `npm run dev` for development
-- The server runs on port 5000 and serves both the API and the client
-- Use the mock data in development or connect to your own database
+- All data is mocked, so no database or server connection is required

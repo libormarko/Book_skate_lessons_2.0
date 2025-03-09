@@ -2,6 +2,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { Link } from "wouter";
+import { BASE_PATH } from "@/lib/constants";
 
 export function MobileNav({ className }: { className?: string }) {
   return (

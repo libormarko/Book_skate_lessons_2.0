@@ -1,5 +1,5 @@
 import type { Skatepark } from "@/mocks/types";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import tt from "@tomtom-international/web-sdk-maps";
 import "@tomtom-international/web-sdk-maps/dist/maps.css";
 import { useLocation } from "wouter";
@@ -12,6 +12,7 @@ export function MapView({ skateparks }: MapViewProps) {
   const mapElement = useRef<HTMLDivElement>(null);
   const mapInstance = useRef<tt.Map | null>(null);
   const [_, setLocation] = useLocation();
+  const [mapError, setMapError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!mapElement.current) return;
@@ -94,6 +95,7 @@ export function MapView({ skateparks }: MapViewProps) {
         marker.setPopup(popup);
 
         popupContent.querySelector('.book-lesson-btn')?.addEventListener('click', () => {
+          // Add base path for GitHub Pages
           setLocation(`/booking/${park.id}`);
         });
       });

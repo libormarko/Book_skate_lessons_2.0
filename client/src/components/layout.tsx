@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { MobileNav } from "./mobile-nav";
+import { BASE_PATH } from "@/lib/constants";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (

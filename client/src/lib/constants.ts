@@ -1,3 +1,7 @@
+// GitHub Pages configuration
+export const IS_GITHUB_PAGES = window.location.hostname === 'libormarko.github.io';
+export const BASE_PATH = IS_GITHUB_PAGES ? '/Book_skate_lessons_2.0' : '';
+
 export const CITIES = [
   "Berlin",
   "Hamburg",
